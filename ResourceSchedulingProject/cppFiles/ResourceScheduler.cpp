@@ -1,6 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "../hFiles/ResourceScheduler.h"
-#include <set>
 
 
 ResourceScheduler::ResourceScheduler(int tasktype,int caseID) {
@@ -62,11 +61,19 @@ bool compare2(const int& a, const int& b) {
 	return (*pDataSize)[a][0] > (*pDataSize)[b][0];
 }
 
-bool compare3(const pair<int, double> & left, const pair<int, double>& right) {
-	return left.second < right.second;
-}
+struct MyPair {
+	int first;
+	double second;
+};
 
-int evaluate() {
+class MyPairCompare {
+public:
+	bool operator()(const MyPair& left, const MyPair& right) const {
+		return left.second < right.second;
+	}
+};
+
+int evaluateProcessingTime() {
 	return 1;
 }
 
@@ -75,8 +82,7 @@ void ResourceScheduler::schedule() {
 	vector<vector<int>> hostCoreBlock(numHost);
 	for (int i = 0; i < numHost; i++)
 		hostCoreBlock[i].resize(hostCore[i], 0);
-
-	
+		
 	//Sort the blocks of each job in order of BlockSize Desc
 	for (int i = 0; i < dataSize.size(); i++) {
 		sort(dataSize[i].begin(), dataSize[i].end(), compare1);
@@ -94,30 +100,55 @@ void ResourceScheduler::schedule() {
 	for (int num : hostCore) m += num;
 
 	//Assign index to each core in each host
-	vector<vector<int>> coreLoc(m, vector<int>{0, 0});
+	vector<pair<int, int>> coreLoc(m);
 	int k = 0;
 	for (int i = 0; i < numHost; i++) {
 		for (int j = 0; j < hostCore[i]; j++)
-			coreLoc[k++] = {i, j};
+			coreLoc[k++] = { i, j };
 	}
 	//Maintain a order seuqnce of cores in order of FinishedTime Asc
-	map<int, double, compare3> coreTime;
+	set<MyPair, MyPairCompare> Set;
 	for (int i = 0; i < m; i++) {
-		coreTime.insert(pair<int, double>(i, 0));
+		Set.insert(MyPair{ i, double(rand()) });
 	}
-
+	
 	//Allocate the jobs in order
 	for (int i = 0; i < numJob; i++) {
 		set<pair<int, int>> allocatedJobCore;
 
-		//Consider to split the tasks into j cores
+		//Consider to split the jobs into j parts
 		int maxIt = min(m, jobBlock[orderedJobs[i]]);
 		vector<double> time;
-		for (int j = 0; j < maxIt; j++) {
-			//
+		for (int j = 1; j < maxIt + 1; j++) {
+			//Choose the core with the earliest FinishTime, then the block in use 
+			//TODO: This could be optimized
+
+			//Allocate jobs to cores individually
+			for (int k = 0; k < jobBlock[orderedJobs[i]]; k++) {
+
+				//
+				double minFinishTime = (Set.begin())->second;
+				auto it = Set.begin();
+				for (; it != Set.end(); it++) {
+					if (it->second != minFinishTime) {
+						it = Set.end();
+						break;
+					}
+					else {
+						//If the host of core is the same as the job block is assigned
+						if (coreLoc[it->first].first == location[orderedJobs[i]][])
+						//if (it->)
+					}
+				}
+			}
+
+
+
+
+
 
 			//If the MAKESPAN is not reduced, then stop the iteration
-
+			evaluateProcessingTime();
 		}
 
 
