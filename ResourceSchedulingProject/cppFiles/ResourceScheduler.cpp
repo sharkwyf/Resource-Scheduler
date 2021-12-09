@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "../hFiles/ResourceScheduler.h"
+#include <set>
 
 
 ResourceScheduler::ResourceScheduler(int tasktype,int caseID) {
@@ -51,23 +52,101 @@ ResourceScheduler::ResourceScheduler(int tasktype,int caseID) {
 		hostCoreFinishTime[i].resize(hostCore[i], 0);
 }
 
+vector<vector<double>>* pDataSize;
+
+bool compare1(const double& a, const double& b) {
+	return a > b;
+}
+
+bool compare2(const int& a, const int& b) {
+	return (*pDataSize)[a][0] > (*pDataSize)[b][0];
+}
+
+bool compare3(const pair<int, double> & left, const pair<int, double>& right) {
+	return left.second < right.second;
+}
+
+int evaluate() {
+	return 1;
+}
+
 void ResourceScheduler::schedule() {
 
 	vector<vector<int>> hostCoreBlock(numHost);
 	for (int i = 0; i < numHost; i++)
 		hostCoreBlock[i].resize(hostCore[i], 0);
 
+	
+	//Sort the blocks of each job in order of BlockSize Desc
+	for (int i = 0; i < dataSize.size(); i++) {
+		sort(dataSize[i].begin(), dataSize[i].end(), compare1);
+	}
+
+	//Sort the jobs in order of Max BlockSize Desc
+	vector<int> orderedJobs(numJob);
+	for (int i = 0; i < numJob; i++)
+		orderedJobs[i] = i;
+	pDataSize = &(dataSize);
+	sort(orderedJobs.begin(), orderedJobs.end(), compare2);
+	
+	//The num of Cores in total
+	int m = 0;
+	for (int num : hostCore) m += num;
+
+	//Assign index to each core in each host
+	vector<vector<int>> coreLoc(m, vector<int>{0, 0});
+	int k = 0;
+	for (int i = 0; i < numHost; i++) {
+		for (int j = 0; j < hostCore[i]; j++)
+			coreLoc[k++] = {i, j};
+	}
+	//Maintain a order seuqnce of cores in order of FinishedTime Asc
+	map<int, double, compare3> coreTime;
+	for (int i = 0; i < m; i++) {
+		coreTime.insert(pair<int, double>(i, 0));
+	}
+
+	//Allocate the jobs in order
 	for (int i = 0; i < numJob; i++) {
 		set<pair<int, int>> allocatedJobCore;
+
+		//Consider to split the tasks into j cores
+		int maxIt = min(m, jobBlock[orderedJobs[i]]);
+		vector<double> time;
+		for (int j = 0; j < maxIt; j++) {
+			//
+
+			//If the MAKESPAN is not reduced, then stop the iteration
+
+		}
+
+
+
+	}
+
+
+	////////////////////////////////////////////////////////////
+	//Allocate the jobs in order
+	for (int i = 0; i < numJob; i++) {
+		set<pair<int, int>> allocatedJobCore;
+		
+
+		//Allocate the blocks in order
 		for (int j = 0; j < jobBlock[i]; j++) {
+			//TODO: Decide which core to allocate
 			int hid = rand() % numHost;
 			int cid = rand() % hostCore[hid];
+			//Record allocated core
 			allocatedJobCore.insert({ hid,cid });
+			// For job-block, Record the (host, core, rank): the order of execution of the block on the core.
 			runLoc[i][j] = make_tuple(hid, cid, hostCoreBlock[hid][cid]++);
 		}
 		/*for (int j = 0; j < jobBlock[i]; j++)
 			finishTime[i]+=*/
+		
+		//TODO: Calculate Job FInish Time
 		jobFinishTime[i] = rand() % 200;
+		//Record the number of cores allocated to the job.
 		jobCore[i] = allocatedJobCore.size();
 	}
 
@@ -75,6 +154,7 @@ void ResourceScheduler::schedule() {
 	for (int i = 0; i < numHost; i++) {
 		for (int j = 0; j < hostCore[i]; j++) {
 			int numTask = rand() % 10 + 1;
+			//Core perspective: host->core->task-> <job,block,startTime,endTime>
 			hostCoreTask[i][j].resize(numTask);
 			for (int k = 0; k < numTask; k++) {
 				int jid = rand() % numJob;
