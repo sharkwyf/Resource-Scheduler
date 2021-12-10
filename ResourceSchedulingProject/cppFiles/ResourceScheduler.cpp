@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "../hFiles/ResourceScheduler.h"
+#define MAX_JOB_CORES 10
 
 
 ResourceScheduler::ResourceScheduler(int tasktype,int caseID) {
@@ -82,13 +83,18 @@ int evaluateProcessingTime() {
 	return 1;
 }
 
+//O(numJob * MAX_JOB_CORES * m * jobBlock[i])
 void ResourceScheduler::schedule() {
 
 	vector<vector<int>> hostCoreBlock(numHost);
 	for (int i = 0; i < numHost; i++)
 		hostCoreBlock[i].resize(hostCore[i], 0);
-		
 
+	//The num of Cores in total. O(numHost)
+	int m = 0;
+	for (int num : hostCore) m += num;
+
+	//Store the index of Jobs and Blocks. O(sum(jobBlock))
 	vector<pair<int, vector<int>>> orderedJobs(numJob);
 	for (int i = 0; i < numJob; i++) {
 		orderedJobs[i].first = i;
@@ -98,129 +104,185 @@ void ResourceScheduler::schedule() {
 		}
 	}
 
-	//Sort the blocks of each job in order of BlockSize Desc
+	//Sort the blocks of each job in order of BlockSize Desc. O(numJob * jobBlock[i] * log(jobBlock[i]))
 	for (int i = 0; i < orderedJobs.size(); i++) {
 		pDataSizeRow = &(dataSize[i]);
 		sort(orderedJobs[i].second.begin(), orderedJobs[i].second.end(), compare2);
 	}
 
-	//Sort the jobs in order of Max BlockSize Desc
+	//Sort the jobs in order of Max BlockSize Desc. O(numJob * log(numJob))
 	pDataSize = &(dataSize);
 	sort(orderedJobs.begin(), orderedJobs.end(), compare3);
-	
-	//The num of Cores in total
-	int m = 0;
-	for (int num : hostCore) m += num;
 
-	//Assign index to each core in each host
+	//Assign a 1-D index to each core of each host. O(m) // m is the total count of cores
 	vector<pair<int, int>> coreLoc(m);
 	int k = 0;
 	for (int i = 0; i < numHost; i++) {
 		for (int j = 0; j < hostCore[i]; j++)
 			coreLoc[k++] = { i, j };
 	}
-	//Maintain a order seuqnce of cores in order of FinishedTime Asc
+
+	//Maintain a sequence of cores in order of FinishedTime Asc. O(m * log(m))
 	set<MyPair, MyPairCompare> Set;
 	for (int i = 0; i < m; i++) {
 		Set.insert(MyPair{ i, 0.0 });
 	}
-	
-	//Allocate the jobs in order
+
+	//Allocate the jobs in order. O(numJob * MAX_JOB_CORES * m * jobBlock[i])
 	for (int i = 0; i < numJob; i++) {
-		set<pair<int, int>> allocatedJobCore;
+		//set<pair<int, int>> allocatedJobCore;
+		double minFinishTime = -1;
+		double startTime = -1;
+		int jobId = orderedJobs[i].first;
 
 		//Consider to split the jobs into j parts
-		int maxIt = min(m, jobBlock[orderedJobs[i].first]);
+		int maxIt = min(min(m, jobBlock[orderedJobs[i].first]), MAX_JOB_CORES);
 		vector<double> time;
-		for (int j = 1; j < maxIt + 1; j++) {
+		int j = 1;
+		set<MyPair, MyPairCompare> assignedCores;
+		set<int> assignedJobCores;
+		set<MyPair, MyPairCompare> prevAssignedCores;
+
+		//Allocate job blocks to j cores individually. O(MAX_JOB_CORES * m * jobBlock[i])
+		for (; j < maxIt + 1; j++) {
 			//Choose the core with the earliest FinishTime, then the block in use 
 			//TODO: This could be optimized
+			assignedCores.clear();
+			assignedJobCores.clear();
+			int transmitSpeed = St;
+			int computingSpeed = (1 - alpha * (j - 1)) * Sc[jobId];
 
-			//Allocate job blocks to j cores individually
-			set<MyPair, MyPairCompare> assignedCores;
-			for (int k = 0; k < jobBlock[orderedJobs[i].first]; k++) {
+			//Allocate job blocks to j cores individually. O(m * jobBlock[i])
+			for (int k = 0; k < jobBlock[jobId]; k++) {
+				int blockId = orderedJobs[i].second[k];
 
 				//Choose the core to assign
+				//TODO: Optimize: May choose the cores with the most storage of blocks
+				//If the assigned cores aren't full
 				if (assignedCores.size() < j) {
-					//Add new core
-					double minFinishTime = (Set.begin())->second;
+					//Add new core. O(m)
+					double minFinishTime1 = (Set.begin())->second;
+					bool isStored = false;
 					auto it = Set.begin();
 					for (; it != Set.end(); it++) {
-						if (it->second != minFinishTime) {
+						if (assignedJobCores.find(it->first) != assignedJobCores.end()) {
+							continue;
+						}
+						else if (it->second != minFinishTime1) {
 							it = Set.begin();
+							while (assignedJobCores.find(it->first) != assignedJobCores.end()) {
+								it++;
+							}
 							break;
 						}
 						else {
 							//If the host of core is the same as the job block is assigned
-							if (coreLoc[it->first].first == location[orderedJobs[i].first][orderedJobs[i].second[k]]) {
+							if (coreLoc[it->first].first == location[jobId][blockId]) {
+								isStored = true;
 								break;
 							}
 						}
 					}
-					assignedCores.insert(MyPair{ it->first, it->second + dataSize[orderedJobs[i].first][orderedJobs[i].second[k]], vector<int> { orderedJobs[i].second[k] } });
+					//O(log(MAX_JOB_CORES))
+					assignedJobCores.insert(it->first);
+					assignedCores.insert(MyPair{ it->first, dataSize[jobId][blockId] / computingSpeed + (isStored ? 0 : dataSize[jobId][blockId] / transmitSpeed), vector<int> { blockId } });
 				}
 				else {
-
+					//Choose the core that stores the block data among the cores with the same earliest FinishTime.
+					bool isStored = false;
+					auto it = assignedCores.begin();
+					for (; it != assignedCores.end(); it++) {
+						//If finishTime > minFinishTime1 + transmitTime, break the iteration
+						if (it->second > assignedCores.begin()->second + dataSize[jobId][blockId] / transmitSpeed) {
+							it = assignedCores.begin();
+							break;
+						}
+						else {
+							//If the host of core is the same as the job block is assigned
+							if (coreLoc[it->first].first == location[jobId][blockId]) {
+								isStored = true;
+								break;
+							}
+						}
+					}
+					if (it == assignedCores.end())
+						it = assignedCores.begin();
+					//Update assignedCores
+					MyPair p{ it->first, it->second + dataSize[jobId][blockId] / computingSpeed + (isStored ? 0 : dataSize[jobId][blockId] / transmitSpeed), it->third };
+					p.third.push_back(blockId);
+					assignedCores.erase(*it);
+					assignedCores.insert(p);
 				}
-
-
 			}
 
+			double maxStartTime1 = 0, maxFinishTime1 = 0;
+			for (auto it = assignedCores.begin(); it != assignedCores.end(); it++) {
+				int hostid = coreLoc[it->first].first;
+				int coreid = coreLoc[it->first].second;
+				maxStartTime1 = max(maxStartTime1, hostCoreFinishTime[hostid][coreid]);
+				maxFinishTime1 = max(maxFinishTime1, it->second);
+			}
 
+			//Compare the MAKESPAN, if the new ieration has equal or larger MAKESPAN, then break and use the previous assignment.
+			if (j > 1) {
+				if (maxStartTime1 + maxFinishTime1 >= minFinishTime) {
+					j--;
+					break;
+				}
+			}
 
-
-
-
-			//If the MAKESPAN is not reduced, then stop the iteration
-			evaluateProcessingTime();
+			startTime = maxStartTime1;
+			minFinishTime = maxStartTime1 + maxFinishTime1;
+			prevAssignedCores = assignedCores;
 		}
 
+		assignedCores = prevAssignedCores;
 
+		//Record Data. O(jobBlock[i] + MAX_JOB_CORES * log(m))
+		for (auto it = prevAssignedCores.begin(); it != prevAssignedCores.end(); it++) {
+			int hostid = coreLoc[it->first].first;
+			int coreid = coreLoc[it->first].second;
 
-	}
+			hostCoreTask[hostid][coreid].resize(it->third.size());
+			// For job-block, Record the (host, core, rank): the order of execution of the block on the core. O(jobBlock[i])
+			for (int k = 0; k < it->third.size(); k++) {
 
+				int blockId = it->third[k];
+				runLoc[jobId][blockId] = make_tuple(hostid, coreid, hostCoreBlock[hostid][coreid]++);
 
-	////////////////////////////////////////////////////////////
-	//Allocate the jobs in order
-	for (int i = 0; i < numJob; i++) {
-		set<pair<int, int>> allocatedJobCore;
-		
+				//Core perspective: host->core->task-> <job,block,startTime,endTime>
+				hostCoreTask[hostid][coreid][k] = make_tuple(jobId, blockId, hostCoreFinishTime[hostid][coreid], minFinishTime);
+			}
 
-		//Allocate the blocks in order
-		for (int j = 0; j < jobBlock[i]; j++) {
-			//TODO: Decide which core to allocate
-			int hid = rand() % numHost;
-			int cid = rand() % hostCore[hid];
-			//Record allocated core
-			allocatedJobCore.insert({ hid,cid });
-			// For job-block, Record the (host, core, rank): the order of execution of the block on the core.
-			runLoc[i][j] = make_tuple(hid, cid, hostCoreBlock[hid][cid]++);
-		}
-		/*for (int j = 0; j < jobBlock[i]; j++)
-			finishTime[i]+=*/
-		
-		//TODO: Calculate Job FInish Time
-		jobFinishTime[i] = rand() % 200;
-		//Record the number of cores allocated to the job.
-		jobCore[i] = allocatedJobCore.size();
-	}
+			//Calculate Job FInish Time. O(1)
+			jobFinishTime[jobId] = minFinishTime;
 
+			//Record the number of cores allocated to the job. O(1)
+			jobCore[jobId] = prevAssignedCores.size();
 
-	for (int i = 0; i < numHost; i++) {
-		for (int j = 0; j < hostCore[i]; j++) {
-			int numTask = rand() % 10 + 1;
-			//Core perspective: host->core->task-> <job,block,startTime,endTime>
-			hostCoreTask[i][j].resize(numTask);
-			for (int k = 0; k < numTask; k++) {
-				int jid = rand() % numJob;
-				int bid = rand() % jobBlock[jid];
-				int endTime = hostCoreFinishTime[i][j] + rand() % 100 + 1;
-				hostCoreTask[i][j][k] = make_tuple(jid, bid, hostCoreFinishTime[i][j], endTime);
-				hostCoreFinishTime[i][j] = endTime;
+			//Record the finish time of host-core. O(MAX_JOB_CORES * log(m))
+			hostCoreFinishTime[hostid][coreid] = minFinishTime;
+			for (auto itS = Set.begin(); itS != Set.end(); itS++) {
+				if (itS->first == it->first) {
+					MyPair p{ it->first, minFinishTime };
+					Set.erase(*itS);
+					Set.insert(p);
+					break;
+				}
 			}
 		}
+		cout << i << ". Job" << jobId << " : starts at |" << startTime << "|, ends at |" << minFinishTime << "|, uses " << prevAssignedCores.size() << " cores: {";
+		for (auto it = assignedCores.begin(); it != assignedCores.end(); it++) {
+			cout << it->first << ", ";
+		}
+		cout << "}" << endl;
 	}
+
+	//Examine Data
+
 }
+
+
 
 void ResourceScheduler::outputSolutionFromBlock() {
 	cout << "\nTask2 Solution (Block Perspective) of Teaching Assistant:\n\n";
