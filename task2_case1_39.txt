@@ -1,0 +1,388 @@
+Task2 Solution (Block Perspective) of Teaching Assistant:
+
+Job0 obtains 3 cores (speed=0.9) and finishes at time 50.7971:
+        Block0: H3, C1, R9 (time=153.33)
+        Block1: H3, C2, R10 (time=61.11)
+        Block2: H2, C2, R11 (time=154.44)
+
+Job1 obtains 3 cores (speed=0.90) and finishes at time 70.94:
+        Block0: H1, C1, R16 (time=56.67)
+        Block1: H3, C3, R16 (time=63.33)
+        Block2: H1, C1, R15 (time=57.78)
+        Block3: H3, C0, R15 (time=143.33)
+
+Job2 obtains 5 cores (speed=0.80) and finishes at time 66.37:
+        Block0: H3, C2, R16 (time=107.50)
+        Block1: H0, C0, R11 (time=106.25)
+        Block2: H2, C2, R16 (time=166.25)
+        Block3: H1, C0, R12 (time=88.75)
+        Block4: H3, C1, R14 (time=148.75)
+
+Job3 obtains 6 cores (speed=0.75) and finishes at time 42.82:
+        Block0: H0, C0, R9 (time=122.67)
+        Block1: H2, C0, R8 (time=114.67)
+        Block2: H3, C3, R11 (time=150.67)
+        Block3: H1, C1, R10 (time=105.33)
+        Block4: H1, C0, R9 (time=122.67)
+        Block5: H3, C0, R10 (time=185.33)
+
+Job4 obtains 7 cores (speed=0.70) and finishes at time 17.21:
+        Block0: H1, C1, R5 (time=161.43)
+        Block1: H0, C0, R4 (time=164.29)
+        Block2: H3, C2, R6 (time=182.86)
+        Block3: H3, C1, R5 (time=210.00)
+        Block4: H3, C3, R5 (time=172.86)
+        Block5: H2, C0, R3 (time=132.86)
+        Block6: H1, C0, R4 (time=164.29)
+
+Job5 obtains 3 cores (speed=0.90) and finishes at time 5.80:
+        Block0: H3, C2, R1 (time=94.44)
+        Block1: H3, C3, R0 (time=135.56)
+        Block2: H3, C3, R1 (time=113.33)
+        Block3: H3, C1, R0 (time=164.44)
+        Block4: H3, C1, R2 (time=76.67)
+        Block5: H3, C2, R0 (time=152.22)
+        Block6: H3, C1, R1 (time=80.00)
+        Block7: H3, C2, R2 (time=74.44)
+
+Job6 obtains 7 cores (speed=0.70) and finishes at time 5.77:
+        Block0: H2, C2, R3 (time=80.00)
+        Block1: H1, C1, R2 (time=127.14)
+        Block2: H3, C0, R2 (time=211.43)
+        Block3: H1, C0, R1 (time=147.14)
+        Block4: H2, C2, R2 (time=98.57)
+        Block5: H2, C1, R2 (time=122.86)
+        Block6: H2, C1, R3 (time=80.00)
+        Block7: H2, C0, R1 (time=201.43)
+        Block8: H0, C0, R2 (time=152.86)
+
+Job7 obtains 5 cores (speed=0.80) and finishes at time 63.77:
+        Block0: H3, C0, R13 (time=122.50)
+        Block1: H3, C3, R14 (time=102.50)
+        Block2: H3, C3, R15 (time=95.00)
+        Block3: H2, C0, R11 (time=166.25)
+        Block4: H3, C0, R14 (time=92.50)
+        Block5: H2, C1, R12 (time=91.25)
+        Block6: H2, C0, R12 (time=80.00)
+        Block7: H1, C1, R14 (time=86.25)
+        Block8: H1, C1, R13 (time=140.00)
+        Block9: H2, C1, R11 (time=151.25)
+
+Job8 obtains 8 cores (speed=0.65) and finishes at time 29.82:
+        Block0: H3, C0, R5 (time=93.85)
+        Block1: H3, C0, R6 (time=83.08)
+        Block2: H1, C1, R7 (time=192.31)
+        Block3: H1, C0, R6 (time=201.54)
+        Block4: H2, C1, R7 (time=76.92)
+        Block5: H3, C3, R6 (time=224.62)
+        Block6: H0, C0, R6 (time=206.15)
+        Block7: H2, C0, R5 (time=160.00)
+        Block8: H2, C2, R8 (time=83.08)
+        Block9: H2, C2, R7 (time=109.23)
+        Block10: H2, C1, R6 (time=116.92)
+
+Job9 obtains 7 cores (speed=0.70) and finishes at time 2.70:
+        Block0: H3, C0, R1 (time=101.43)
+        Block1: H1, C1, R1 (time=121.43)
+        Block2: H1, C1, R0 (time=137.14)
+        Block3: H0, C0, R0 (time=151.43)
+        Block4: H3, C0, R0 (time=134.29)
+        Block5: H1, C0, R0 (time=154.29)
+        Block6: H2, C0, R0 (time=214.29)
+        Block7: H2, C2, R1 (time=121.43)
+        Block8: H2, C1, R0 (time=147.14)
+        Block9: H2, C1, R1 (time=71.43)
+        Block10: H2, C2, R0 (time=131.43)
+        Block11: H0, C0, R1 (time=84.29)
+
+Job10 obtains 7 cores (speed=0.70) and finishes at time 60.57:
+        Block0: H1, C0, R10 (time=152.86)
+        Block1: H3, C3, R13 (time=111.43)
+        Block2: H2, C1, R10 (time=198.57)
+        Block3: H0, C0, R10 (time=168.57)
+        Block4: H3, C0, R12 (time=108.57)
+        Block5: H1, C1, R11 (time=144.29)
+        Block6: H3, C3, R12 (time=112.86)
+        Block7: H2, C0, R9 (time=130.00)
+        Block8: H3, C0, R11 (time=128.57)
+        Block9: H1, C1, R12 (time=97.14)
+        Block10: H2, C0, R10 (time=98.57)
+        Block11: H1, C0, R11 (time=95.71)
+
+Job11 obtains 9 cores (speed=0.60) and finishes at time 27.01:
+        Block0: H1, C0, R5 (time=160.00)
+        Block1: H2, C1, R5 (time=245.00)
+        Block2: H0, C0, R5 (time=185.00)
+        Block3: H2, C0, R4 (time=126.67)
+        Block4: H3, C2, R7 (time=111.67)
+        Block5: H3, C2, R8 (time=108.33)
+        Block6: H1, C1, R6 (time=160.00)
+        Block7: H3, C1, R6 (time=121.67)
+        Block8: H3, C0, R4 (time=206.67)
+        Block9: H3, C1, R7 (time=108.33)
+        Block10: H2, C2, R6 (time=238.33)
+
+Job12 obtains 7 cores (speed=0.70) and finishes at time 12.72:
+        Block0: H0, C0, R3 (time=211.43)
+        Block1: H2, C0, R2 (time=184.29)
+        Block2: H2, C2, R4 (time=147.14)
+        Block3: H2, C2, R5 (time=82.86)
+        Block4: H1, C0, R3 (time=82.86)
+        Block5: H1, C0, R2 (time=151.43)
+        Block6: H1, C1, R3 (time=128.57)
+        Block7: H3, C0, R3 (time=187.14)
+        Block8: H2, C1, R4 (time=160.00)
+        Block9: H1, C1, R4 (time=90.00)
+
+Job13 obtains 8 cores (speed=0.65) and finishes at time 35.07:
+        Block0: H2, C2, R9 (time=106.15)
+        Block1: H0, C0, R7 (time=203.08)
+        Block2: H3, C1, R8 (time=221.54)
+        Block3: H3, C2, R9 (time=212.31)
+        Block4: H2, C2, R10 (time=101.54)
+        Block5: H1, C1, R8 (time=152.31)
+        Block6: H2, C0, R6 (time=138.46)
+        Block7: H1, C0, R7 (time=183.08)
+        Block8: H2, C1, R8 (time=121.54)
+
+Job14 obtains 3 cores (speed=0.90) and finishes at time 11.91:
+        Block0: H3, C1, R4 (time=75.56)
+        Block1: H3, C3, R3 (time=108.89)
+        Block2: H3, C2, R5 (time=65.56)
+        Block3: H3, C2, R4 (time=90.00)
+        Block4: H3, C3, R2 (time=121.11)
+        Block5: H3, C3, R4 (time=67.78)
+        Block6: H3, C1, R3 (time=164.44)
+        Block7: H3, C2, R3 (time=147.78)
+
+Job15 obtains 7 cores (speed=0.70) and finishes at time 38.19:
+        Block0: H0, C0, R8 (time=177.14)
+        Block1: H3, C0, R9 (time=200.00)
+        Block2: H3, C3, R10 (time=180.00)
+        Block3: H2, C0, R7 (time=121.43)
+        Block4: H1, C1, R9 (time=122.86)
+        Block5: H2, C1, R9 (time=107.14)
+        Block6: H1, C0, R8 (time=157.14)
+
+Job16 obtains 3 cores (speed=0.90) and finishes at time 54.63:
+        Block0: H3, C1, R11 (time=116.67)
+        Block1: H2, C2, R13 (time=125.56)
+        Block2: H3, C2, R12 (time=68.89)
+        Block3: H2, C2, R12 (time=137.78)
+        Block4: H3, C1, R10 (time=153.33)
+        Block5: H3, C2, R11 (time=135.56)
+
+Job17 obtains 2 cores (speed=0.95) and finishes at time 33.62:
+        Block0: H3, C0, R7 (time=149.47)
+        Block1: H3, C0, R8 (time=76.84)
+        Block2: H3, C3, R8 (time=87.37)
+        Block3: H3, C3, R9 (time=63.16)
+        Block4: H3, C3, R7 (time=125.26)
+
+Job18 obtains 3 cores (speed=0.90) and finishes at time 56.73:
+        Block0: H3, C2, R13 (time=107.78)
+        Block1: H2, C2, R14 (time=153.33)
+        Block2: H3, C2, R14 (time=61.11)
+        Block3: H3, C1, R12 (time=122.22)
+
+Job19 obtains 3 cores (speed=0.90) and finishes at time 60.11:
+        Block0: H3, C1, R13 (time=132.22)
+        Block1: H2, C2, R15 (time=152.22)
+        Block2: H3, C2, R15 (time=56.67)
+
+The maximum finish time: 70.94
+The total response time: 746.56
+
+
+Task2 Solution (Core Perspective) of Teaching Assistant:
+
+Host0 finishes at time 66.37:
+
+        Core0 has 12 tasks and finishes at time 66.37:
+                J09, B03, runTime 000.0 to 001.5
+                J09, B11, runTime 001.5 to 002.4
+                J06, B08, runTime 002.7 to 004.9
+                J12, B00, runTime 005.8 to 011.8
+                J04, B01, runTime 012.7 to 016.2
+                J11, B02, runTime 017.2 to 024.8
+                J08, B06, runTime 027.0 to 029.6
+                J13, B01, runTime 029.8 to 034.3
+                J15, B00, runTime 035.1 to 038.0
+                J03, B00, runTime 038.2 to 041.4
+                J10, B03, runTime 042.8 to 054.3
+                J02, B01, runTime 060.6 to 064.3
+
+
+
+Host1 finishes at time 70.9:
+
+        Core0 has 13 tasks and finishes at time 66.4:
+                J09, B05, runTime 000.0 to 001.5
+                J06, B03, runTime 002.7 to 004.8
+                J12, B05, runTime 005.8 to 010.1
+                J12, B04, runTime 010.1 to 012.6
+                J04, B06, runTime 012.7 to 016.2
+                J11, B00, runTime 017.2 to 023.6
+                J08, B03, runTime 027.0 to 029.3
+                J13, B07, runTime 029.8 to 034.1
+                J15, B06, runTime 035.1 to 037.7
+                J03, B04, runTime 038.2 to 041.3
+                J10, B00, runTime 042.8 to 053.2
+                J10, B11, runTime 053.2 to 059.7
+                J02, B03, runTime 060.6 to 063.7
+
+        Core1 has 17 tasks and finishes at time 70.9:
+                J09, B02, runTime 000.0 to 001.4
+                J09, B01, runTime 001.4 to 002.6
+                J06, B01, runTime 002.7 to 004.7
+                J12, B06, runTime 005.8 to 009.6
+                J12, B09, runTime 009.6 to 012.2
+                J04, B00, runTime 012.7 to 015.9
+                J11, B06, runTime 017.2 to 023.8
+                J08, B02, runTime 027.0 to 029.4
+                J13, B05, runTime 029.8 to 033.4
+                J15, B04, runTime 035.1 to 037.1
+                J03, B03, runTime 038.2 to 041.0
+                J10, B05, runTime 042.8 to 052.6
+                J10, B09, runTime 052.6 to 059.3
+                J07, B08, runTime 060.6 to 062.3
+                J07, B07, runTime 062.3 to 063.5
+                J01, B02, runTime 063.8 to 066.8
+                J01, B00, runTime 066.8 to 069.7
+
+
+
+Host2 finishes at time 66.4:
+
+        Core0 has 13 tasks and finishes at time 63.8:
+                J09, B06, runTime 000.0 to 002.1
+                J06, B07, runTime 002.7 to 005.6
+                J12, B01, runTime 005.8 to 011.0
+                J04, B05, runTime 012.7 to 015.6
+                J11, B03, runTime 017.2 to 022.3
+                J08, B07, runTime 027.0 to 029.0
+                J13, B06, runTime 029.8 to 033.1
+                J15, B03, runTime 035.1 to 037.1
+                J03, B01, runTime 038.2 to 041.1
+                J10, B07, runTime 042.8 to 051.7
+                J10, B10, runTime 051.7 to 058.4
+                J07, B03, runTime 060.6 to 062.6
+                J07, B06, runTime 062.6 to 063.8
+
+        Core1 has 13 tasks and finishes at time 63.8:
+                J09, B08, runTime 000.0 to 001.5
+                J09, B09, runTime 001.5 to 002.3
+                J06, B05, runTime 002.7 to 004.6
+                J06, B06, runTime 004.6 to 005.8
+                J12, B08, runTime 005.8 to 010.3
+                J11, B01, runTime 017.2 to 027.0
+                J08, B10, runTime 027.0 to 028.5
+                J08, B04, runTime 028.5 to 029.3
+                J13, B08, runTime 029.8 to 032.5
+                J15, B05, runTime 035.1 to 036.9
+                J10, B02, runTime 042.8 to 056.1
+                J07, B09, runTime 060.6 to 062.5
+                J07, B05, runTime 062.5 to 063.6
+
+        Core2 has 17 tasks and finishes at time 66.4:
+                J09, B10, runTime 000.0 to 001.3
+                J09, B07, runTime 001.3 to 002.7
+                J06, B04, runTime 002.7 to 004.1
+                J06, B00, runTime 004.1 to 005.4
+                J12, B02, runTime 005.8 to 010.0
+                J12, B03, runTime 010.0 to 012.5
+                J11, B10, runTime 017.2 to 026.7
+                J08, B09, runTime 027.0 to 028.4
+                J08, B08, runTime 028.4 to 029.4
+                J13, B00, runTime 029.8 to 032.2
+                J13, B04, runTime 032.2 to 034.6
+                J00, B02, runTime 035.1 to 050.8
+                J16, B03, runTime 050.8 to 052.9
+                J16, B01, runTime 052.9 to 054.6
+                J18, B01, runTime 054.6 to 056.2
+                J19, B01, runTime 056.7 to 060.1
+                J02, B02, runTime 060.6 to 066.4
+
+
+
+Host3 finishes at time 70.9:
+
+        Core0 has 16 tasks and finishes at time 70.9:
+                J09, B04, runTime 000.0 to 001.3
+                J09, B00, runTime 001.3 to 002.5
+                J06, B02, runTime 002.7 to 005.7
+                J12, B07, runTime 005.8 to 011.1
+                J11, B08, runTime 017.2 to 025.7
+                J08, B00, runTime 027.0 to 028.2
+                J08, B01, runTime 028.2 to 029.2
+                J17, B00, runTime 029.8 to 031.9
+                J17, B01, runTime 031.9 to 032.8
+                J15, B01, runTime 035.1 to 038.2
+                J03, B05, runTime 038.2 to 042.8
+                J10, B08, runTime 042.8 to 051.4
+                J10, B04, runTime 051.4 to 058.8
+                J07, B00, runTime 060.6 to 062.1
+                J07, B04, runTime 062.1 to 063.4
+                J01, B03, runTime 063.8 to 070.9
+
+        Core1 has 15 tasks and finishes at time 66.4:
+                J05, B03, runTime 000.0 to 003.0
+                J05, B06, runTime 003.0 to 004.5
+                J05, B04, runTime 004.5 to 005.8
+                J14, B06, runTime 005.8 to 009.1
+                J14, B00, runTime 009.1 to 010.6
+                J04, B03, runTime 012.7 to 017.2
+                J11, B07, runTime 017.2 to 022.2
+                J11, B09, runTime 022.2 to 026.7
+                J13, B02, runTime 029.8 to 035.0
+                J00, B00, runTime 035.1 to 050.7
+                J16, B04, runTime 050.8 to 052.8
+                J16, B00, runTime 052.8 to 054.6
+                J18, B03, runTime 054.6 to 056.1
+                J19, B00, runTime 056.7 to 059.7
+                J02, B04, runTime 060.6 to 065.8
+
+        Core2 has 17 tasks and finishes at time 66.4:
+                J05, B05, runTime 000.0 to 002.8
+                J05, B00, runTime 002.8 to 004.6
+                J05, B07, runTime 004.6 to 005.8
+                J14, B07, runTime 005.8 to 008.7
+                J14, B03, runTime 008.7 to 010.5
+                J14, B02, runTime 010.5 to 011.9
+                J04, B02, runTime 012.7 to 016.4
+                J11, B04, runTime 017.2 to 021.7
+                J11, B05, runTime 021.7 to 026.1
+                J13, B03, runTime 029.8 to 034.8
+                J00, B01, runTime 035.1 to 041.3
+                J16, B05, runTime 050.8 to 052.8
+                J16, B02, runTime 052.8 to 053.8
+                J18, B00, runTime 054.6 to 056.0
+                J18, B02, runTime 056.0 to 056.7
+                J19, B02, runTime 056.7 to 057.9
+                J02, B00, runTime 060.6 to 064.2
+
+        Core3 has 17 tasks and finishes at time 70.9:
+                J05, B01, runTime 000.0 to 002.5
+                J05, B02, runTime 002.5 to 004.6
+                J14, B04, runTime 005.8 to 008.2
+                J14, B01, runTime 008.2 to 010.4
+                J14, B05, runTime 010.4 to 011.6
+                J04, B04, runTime 012.7 to 016.4
+                J08, B05, runTime 027.0 to 029.8
+                J17, B04, runTime 029.8 to 031.5
+                J17, B02, runTime 031.5 to 032.7
+                J17, B03, runTime 032.7 to 033.6
+                J15, B02, runTime 035.1 to 038.1
+                J03, B02, runTime 038.2 to 042.0
+                J10, B06, runTime 042.8 to 050.5
+                J10, B01, runTime 050.5 to 058.1
+                J07, B01, runTime 060.6 to 062.0
+                J07, B02, runTime 062.0 to 063.2
+                J01, B01, runTime 063.8 to 066.9
+
+
+
+The maximum finish time of hosts: 70.9
+The total efficacious running time: 672.2
+Utilization rate: 0.9
+
