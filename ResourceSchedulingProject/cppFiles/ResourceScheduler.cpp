@@ -5,7 +5,8 @@
 
 ResourceScheduler::ResourceScheduler(int tasktype,int caseID) {
 	taskType = tasktype;
-	string filePath = "../input/task" + to_string(taskType) + "_case"+to_string(caseID)+".txt";
+	string filePath = "C:/Users/12210/Desktop/Projects/5.Resource-Scheduler/Debug/input/task" + to_string(taskType) + "_case"+to_string(caseID)+".txt";
+	//string filePath = "../input/task" + to_string(taskType) + "_case" + to_string(caseID) + ".txt";
 	freopen(filePath.c_str(), "r", stdin);
 	cin >> numJob >> numHost >> alpha;
 	if (taskType == 2)
@@ -54,6 +55,7 @@ ResourceScheduler::ResourceScheduler(int tasktype,int caseID) {
 
 vector<vector<double>>* pDataSize;
 vector<double>* pDataSizeRow;
+//vector<int>* pJobBlock;
 
 bool compare2(const int& a, const int& b) {
 	return (*pDataSizeRow)[a] > (*pDataSizeRow)[b];
@@ -61,6 +63,8 @@ bool compare2(const int& a, const int& b) {
 
 bool compare3(const pair<int, vector<int>>& a, const pair<int, vector<int>>& b) {
 	return (*pDataSize)[a.first][a.second[0]] > (*pDataSize)[b.first][b.second[0]];
+	//return  accumulate((*pDataSize)[a.first].begin(), (*pDataSize)[a.first].end(), 0) > accumulate((*pDataSize)[b.first].begin(), (*pDataSize)[b.first].end(), 0);
+	//return (*pJobBlock)[a.first] > (*pJobBlock)[b.first];
 }
 
 struct MyPair {
@@ -78,10 +82,6 @@ public:
 			return left.first < right.first;
 	}
 };
-
-int evaluateProcessingTime() {
-	return 1;
-}
 
 //O(numJob * MAX_JOB_CORES * m * jobBlock[i])
 void ResourceScheduler::schedule() {
@@ -111,7 +111,8 @@ void ResourceScheduler::schedule() {
 	}
 
 	//Sort the jobs in order of Max BlockSize Desc. O(numJob * log(numJob))
-	pDataSize = &(dataSize);
+	pDataSize = &(dataSize); 
+	//pJobBlock = &(jobBlock);
 	sort(orderedJobs.begin(), orderedJobs.end(), compare3);
 
 	//Assign a 1-D index to each core of each host. O(m) // m is the total count of cores
@@ -139,6 +140,7 @@ void ResourceScheduler::schedule() {
 		int maxIt = min(min(m, jobBlock[orderedJobs[i].first]), MAX_JOB_CORES);
 		vector<double> time;
 		int j = 1;
+		int prevj = 1;
 		set<MyPair, MyPairCompare> assignedCores;
 		set<int> assignedJobCores;
 		set<MyPair, MyPairCompare> prevAssignedCores;
@@ -183,6 +185,12 @@ void ResourceScheduler::schedule() {
 							}
 						}
 					}
+					if (it == Set.end()) {
+						it = Set.begin();
+						while (assignedJobCores.find(it->first) != assignedJobCores.end()) {
+							it++;
+						}
+					}
 					//O(log(MAX_JOB_CORES))
 					assignedJobCores.insert(it->first);
 					assignedCores.insert(MyPair{ it->first, dataSize[jobId][blockId] / computingSpeed + (isStored ? 0 : dataSize[jobId][blockId] / transmitSpeed), vector<int> { blockId } });
@@ -223,35 +231,33 @@ void ResourceScheduler::schedule() {
 				maxFinishTime1 = max(maxFinishTime1, it->second);
 			}
 
-			//Compare the MAKESPAN, if the new ieration has equal or larger MAKESPAN, then break and use the previous assignment.
-			if (j > 1) {
-				if (maxStartTime1 + maxFinishTime1 >= minFinishTime) {
-					j--;
-					break;
-				}
+			//Compare the MAKESPAN, if the new ieration has equal or lesser MAKESPAN, then update the assignment.
+			if ((j == 1) || ((j > 1) && (maxStartTime1 + maxFinishTime1 < minFinishTime))) {
+				prevj = j;
+				startTime = maxStartTime1;
+				minFinishTime = maxStartTime1 + maxFinishTime1;
+				prevAssignedCores = assignedCores;
 			}
-
-			startTime = maxStartTime1;
-			minFinishTime = maxStartTime1 + maxFinishTime1;
-			prevAssignedCores = assignedCores;
 		}
-
-		assignedCores = prevAssignedCores;
 
 		//Record Data. O(jobBlock[i] + MAX_JOB_CORES * log(m))
 		for (auto it = prevAssignedCores.begin(); it != prevAssignedCores.end(); it++) {
 			int hostid = coreLoc[it->first].first;
 			int coreid = coreLoc[it->first].second;
 
-			hostCoreTask[hostid][coreid].resize(it->third.size());
+			//double stime = hostCoreFinishTime[hostid][coreid];
+			double stime = startTime;
+			int blockId = -1;
 			// For job-block, Record the (host, core, rank): the order of execution of the block on the core. O(jobBlock[i])
 			for (int k = 0; k < it->third.size(); k++) {
 
-				int blockId = it->third[k];
+				blockId = it->third[k];
 				runLoc[jobId][blockId] = make_tuple(hostid, coreid, hostCoreBlock[hostid][coreid]++);
 
 				//Core perspective: host->core->task-> <job,block,startTime,endTime>
-				hostCoreTask[hostid][coreid][k] = make_tuple(jobId, blockId, hostCoreFinishTime[hostid][coreid], minFinishTime);
+				double tptime = dataSize[jobId][blockId] / ((1 - alpha * (prevAssignedCores.size() - 1)) * Sc[jobId]) + (coreLoc[it->first].first == location[jobId][blockId] ? 0 : dataSize[jobId][blockId] / St);
+				hostCoreTask[hostid][coreid].push_back( make_tuple(jobId, blockId, stime, stime + tptime));
+				stime += tptime;
 			}
 
 			//Calculate Job FInish Time. O(1)
@@ -272,7 +278,7 @@ void ResourceScheduler::schedule() {
 			}
 		}
 		cout << i << ". Job" << jobId << " : starts at |" << startTime << "|, ends at |" << minFinishTime << "|, uses " << prevAssignedCores.size() << " cores: {";
-		for (auto it = assignedCores.begin(); it != assignedCores.end(); it++) {
+		for (auto it = prevAssignedCores.begin(); it != prevAssignedCores.end(); it++) {
 			cout << it->first << ", ";
 		}
 		cout << "}" << endl;
