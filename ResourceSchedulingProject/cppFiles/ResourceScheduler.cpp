@@ -52,24 +52,29 @@ ResourceScheduler::ResourceScheduler(int tasktype,int caseID) {
 }
 
 vector<vector<double>>* pDataSize;
-
-bool compare1(const double& a, const double& b) {
-	return a > b;
-}
+vector<double>* pDataSizeRow;
 
 bool compare2(const int& a, const int& b) {
-	return (*pDataSize)[a][0] > (*pDataSize)[b][0];
+	return (*pDataSizeRow)[a] > (*pDataSizeRow)[b];
+}
+
+bool compare3(const pair<int, vector<int>>& a, const pair<int, vector<int>>& b) {
+	return (*pDataSize)[a.first][a.second[0]] > (*pDataSize)[b.first][b.second[0]];
 }
 
 struct MyPair {
 	int first;
 	double second;
+	vector<int> third;
 };
 
 class MyPairCompare {
 public:
 	bool operator()(const MyPair& left, const MyPair& right) const {
-		return left.second < right.second;
+		if (left.second != right.second)
+			return left.second < right.second;
+		else
+			return left.first < right.first;
 	}
 };
 
@@ -83,17 +88,25 @@ void ResourceScheduler::schedule() {
 	for (int i = 0; i < numHost; i++)
 		hostCoreBlock[i].resize(hostCore[i], 0);
 		
+
+	vector<pair<int, vector<int>>> orderedJobs(numJob);
+	for (int i = 0; i < numJob; i++) {
+		orderedJobs[i].first = i;
+		orderedJobs[i].second = vector<int>(jobBlock[i]);
+		for (int j = 0; j < jobBlock[i]; j++) {
+			orderedJobs[i].second[j] = j;
+		}
+	}
+
 	//Sort the blocks of each job in order of BlockSize Desc
-	for (int i = 0; i < dataSize.size(); i++) {
-		sort(dataSize[i].begin(), dataSize[i].end(), compare1);
+	for (int i = 0; i < orderedJobs.size(); i++) {
+		pDataSizeRow = &(dataSize[i]);
+		sort(orderedJobs[i].second.begin(), orderedJobs[i].second.end(), compare2);
 	}
 
 	//Sort the jobs in order of Max BlockSize Desc
-	vector<int> orderedJobs(numJob);
-	for (int i = 0; i < numJob; i++)
-		orderedJobs[i] = i;
 	pDataSize = &(dataSize);
-	sort(orderedJobs.begin(), orderedJobs.end(), compare2);
+	sort(orderedJobs.begin(), orderedJobs.end(), compare3);
 	
 	//The num of Cores in total
 	int m = 0;
@@ -109,7 +122,7 @@ void ResourceScheduler::schedule() {
 	//Maintain a order seuqnce of cores in order of FinishedTime Asc
 	set<MyPair, MyPairCompare> Set;
 	for (int i = 0; i < m; i++) {
-		Set.insert(MyPair{ i, double(rand()) });
+		Set.insert(MyPair{ i, 0.0 });
 	}
 	
 	//Allocate the jobs in order
@@ -117,29 +130,40 @@ void ResourceScheduler::schedule() {
 		set<pair<int, int>> allocatedJobCore;
 
 		//Consider to split the jobs into j parts
-		int maxIt = min(m, jobBlock[orderedJobs[i]]);
+		int maxIt = min(m, jobBlock[orderedJobs[i].first]);
 		vector<double> time;
 		for (int j = 1; j < maxIt + 1; j++) {
 			//Choose the core with the earliest FinishTime, then the block in use 
 			//TODO: This could be optimized
 
-			//Allocate jobs to cores individually
-			for (int k = 0; k < jobBlock[orderedJobs[i]]; k++) {
+			//Allocate job blocks to j cores individually
+			set<MyPair, MyPairCompare> assignedCores;
+			for (int k = 0; k < jobBlock[orderedJobs[i].first]; k++) {
 
-				//
-				double minFinishTime = (Set.begin())->second;
-				auto it = Set.begin();
-				for (; it != Set.end(); it++) {
-					if (it->second != minFinishTime) {
-						it = Set.end();
-						break;
+				//Choose the core to assign
+				if (assignedCores.size() < j) {
+					//Add new core
+					double minFinishTime = (Set.begin())->second;
+					auto it = Set.begin();
+					for (; it != Set.end(); it++) {
+						if (it->second != minFinishTime) {
+							it = Set.begin();
+							break;
+						}
+						else {
+							//If the host of core is the same as the job block is assigned
+							if (coreLoc[it->first].first == location[orderedJobs[i].first][orderedJobs[i].second[k]]) {
+								break;
+							}
+						}
 					}
-					else {
-						//If the host of core is the same as the job block is assigned
-						if (coreLoc[it->first].first == location[orderedJobs[i]][])
-						//if (it->)
-					}
+					assignedCores.insert(MyPair{ it->first, it->second + dataSize[orderedJobs[i].first][orderedJobs[i].second[k]], vector<int> { orderedJobs[i].second[k] } });
 				}
+				else {
+
+				}
+
+
 			}
 
 
