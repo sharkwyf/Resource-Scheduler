@@ -129,7 +129,7 @@ void ResourceScheduler::schedule() {
 		Set.insert(MyPair{ i, 0.0 });
 	}
 
-	//Allocate the jobs in order. O(numJob * MAX_JOB_CORES * m * log(m) * jobBlock[i] * log(MAX_JOB_CORES))
+	//Allocate the jobs in order. O(numJob * MAX_JOB_CORES * m * jobBlock[i]))
 	for (int i = 0; i < numJob; i++) {
 		//set<pair<int, int>> allocatedJobCore;
 		double minFinishTime = -1;
@@ -145,7 +145,7 @@ void ResourceScheduler::schedule() {
 		set<int> assignedJobCores;
 		set<MyPair, MyPairCompare> prevAssignedCores;
 
-		//Allocate job blocks to j cores individually. O(MAX_JOB_CORES * m * log(m) * jobBlock[i] * log(MAX_JOB_CORES))
+		//Allocate job blocks to j cores individually. O(MAX_JOB_CORES * m * jobBlock[i]))
 		for (; j < maxIt + 1; j++) {
 			//Choose the core with the earliest FinishTime, then the block in use 
 			//TODO: This could be optimized
@@ -154,7 +154,7 @@ void ResourceScheduler::schedule() {
 			int transmitSpeed = St;
 			int computingSpeed = (1 - alpha * (j - 1)) * Sc[jobId];
 
-			//Allocate job blocks to j cores individually. O(m * log(m) * jobBlock[i] * log(MAX_JOB_CORES))
+			//Allocate job blocks to j cores individually. O(m * jobBlock[i]))
 			for (int k = 0; k < jobBlock[jobId]; k++) {
 				int blockId = orderedJobs[i].second[k];
 
@@ -215,7 +215,7 @@ void ResourceScheduler::schedule() {
 					}
 					if (it == assignedCores.end())
 						it = assignedCores.begin();
-					//Update assignedCores
+					//Update assignedCores. O(log(MAX_JOB_CORES))
 					MyPair p{ it->first, it->second + dataSize[jobId][blockId] / computingSpeed + (isStored ? 0 : dataSize[jobId][blockId] / transmitSpeed), it->third };
 					p.third.push_back(blockId);
 					assignedCores.erase(*it);
