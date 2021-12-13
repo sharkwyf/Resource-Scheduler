@@ -1,0 +1,201 @@
+Task1 Solution (Block Perspective) of Teaching Assistant:
+Job0
+  block0-H0-C0-time_start:0
+  block1-H0-C2-time_start:1.590909090909091
+  block2-H0-C0-time_start:2.9784688995215314
+  block3-H0-C0-time_start:1.6387559808612442
+  block4-H0-C1-time_start:3.0023923444976077
+  block5-H0-C1-time_start:4.114832535885167
+  block6-H0-C1-time_start:1.6387559808612442
+  block7-H0-C2-time_start:0
+  block8-H0-C2-time_start:4.043062200956938
+  block9-H0-C1-time_start:0
+  block10-H0-C2-time_start:3.0263157894736845
+  block11-H0-C0-time_start:4.270334928229666
+
+Job1
+  block0-H0-C2-time_start:0
+  block1-H0-C1-time_start:1.0406698564593302
+  block2-H0-C0-time_start:0
+  block3-H0-C2-time_start:0.8732057416267943
+  block4-H0-C1-time_start:0
+
+Job2
+  block0-H0-C4-time_start:50.714285714285715
+  block1-H0-C4-time_start:9.642857142857142
+  block2-H0-C4-time_start:35.714285714285715
+  block3-H0-C4-time_start:0
+  block4-H0-C4-time_start:57.714285714285715
+  block5-H0-C4-time_start:43.642857142857146
+  block6-H0-C4-time_start:64.28571428571429
+  block7-H0-C4-time_start:27.714285714285715
+  block8-H0-C4-time_start:18.92857142857143
+
+Job3
+  block0-H0-C3-time_start:7.44578313253012
+  block1-H0-C3-time_start:6.108433734939759
+  block2-H0-C3-time_start:8.06024096385542
+  block3-H0-C3-time_start:4.843373493975903
+  block4-H0-C3-time_start:6.783132530120481
+  block5-H0-C3-time_start:1.7108433734939759
+  block6-H0-C3-time_start:0
+  block7-H0-C3-time_start:3.3493975903614457
+
+Job4
+  block0-H0-C3-time_start:2.74468085106383
+  block1-H0-C3-time_start:1.4042553191489362
+  block2-H0-C3-time_start:0
+  block3-H0-C3-time_start:6.968085106382979
+  block4-H0-C3-time_start:4.042553191489362
+  block5-H0-C3-time_start:5.319148936170214
+  block6-H0-C3-time_start:6.255319148936171
+
+Job5
+  block0-H0-C2-time_start:1.6584766584766584
+  block1-H0-C1-time_start:0
+  block2-H0-C0-time_start:0
+  block3-H0-C1-time_start:1.6738329238329237
+  block4-H0-C2-time_start:0
+
+Job6
+  block0-H0-C0-time_start:0
+  block1-H0-C2-time_start:0
+  block2-H0-C3-time_start:0
+  block3-H0-C1-time_start:0
+
+Job7
+  block0-H0-C0-time_start:0
+  block1-H0-C1-time_start:0
+  block2-H0-C2-time_start:0
+
+Job8
+  block0-H0-C3-time_start:19.13109756097561
+  block1-H0-C0-time_start:18.673780487804876
+  block2-H0-C3-time_start:0
+  block3-H0-C0-time_start:0
+  block4-H0-C1-time_start:17.987804878048777
+  block5-H0-C1-time_start:0
+  block6-H0-C0-time_start:11.204268292682926
+  block7-H0-C2-time_start:0
+  block8-H0-C1-time_start:10.365853658536585
+  block9-H0-C3-time_start:9.603658536585366
+  block10-H0-C2-time_start:9.984756097560975
+
+Job9
+  block0-H0-C0-time_start:2.748741773132017
+  block1-H0-C0-time_start:4.02632597754549
+  block2-H0-C3-time_start:2.3422377080913663
+  block3-H0-C0-time_start:0
+  block4-H0-C3-time_start:0
+  block5-H0-C1-time_start:2.7100271002710024
+  block6-H0-C2-time_start:4.43283004258614
+  block7-H0-C3-time_start:4.510259388308168
+  block8-H0-C2-time_start:0
+  block9-H0-C2-time_start:2.4390243902439024
+  block10-H0-C1-time_start:0
+
+Job10
+  block0-H0-C1-time_start:0
+  block1-H0-C0-time_start:8.314855875831485
+  block2-H0-C3-time_start:8.499630450849963
+  block3-H0-C3-time_start:0
+  block4-H0-C2-time_start:8.388765705838876
+  block5-H0-C1-time_start:4.767184035476718
+  block6-H0-C2-time_start:0
+  block7-H0-C3-time_start:4.397634885439763
+  block8-H0-C2-time_start:4.434589800443459
+  block9-H0-C0-time_start:4.841093865484109
+  block10-H0-C1-time_start:8.425720620842572
+  block11-H0-C0-time_start:0
+
+Job11
+  block0-H0-C2-time_start:0
+  block1-H0-C3-time_start:0
+  block2-H0-C0-time_start:0
+  block3-H0-C1-time_start:2.1379102679915687
+  block4-H0-C3-time_start:1.6410719662752182
+  block5-H0-C1-time_start:0
+  block6-H0-C2-time_start:1.6862390846130684
+  block7-H0-C0-time_start:2.228244504667269
+
+Job12
+  block0-H0-C0-time_start:7.367886178861789
+  block1-H0-C2-time_start:6.605691056910569
+  block2-H0-C2-time_start:0
+  block3-H0-C2-time_start:11.33130081300813
+  block4-H0-C1-time_start:0
+  block5-H0-C1-time_start:11.585365853658537
+  block6-H0-C0-time_start:0
+  block7-H0-C3-time_start:6.504065040650406
+  block8-H0-C3-time_start:11.534552845528456
+  block9-H0-C1-time_start:7.1138211382113825
+  block10-H0-C3-time_start:0
+  block11-H0-C0-time_start:11.6869918699187
+
+Job13
+  block0-H0-C4-time_start:4.925531914893617
+  block1-H0-C4-time_start:4.01063829787234
+  block2-H0-C4-time_start:2.925531914893617
+  block3-H0-C4-time_start:0
+  block4-H0-C4-time_start:1.4787234042553192
+
+Job14
+  block0-H0-C4-time_start:14.862745098039216
+  block1-H0-C4-time_start:20.627450980392158
+  block2-H0-C4-time_start:9.117647058823529
+  block3-H0-C4-time_start:13.098039215686274
+  block4-H0-C4-time_start:4.882352941176471
+  block5-H0-C4-time_start:11.137254901960784
+  block6-H0-C4-time_start:2.627450980392157
+  block7-H0-C4-time_start:18.137254901960787
+  block8-H0-C4-time_start:16.568627450980394
+  block9-H0-C4-time_start:7.0
+  block10-H0-C4-time_start:0
+  block11-H0-C4-time_start:19.43137254901961
+
+Job15
+  block0-H0-C2-time_start:0
+  block1-H0-C3-time_start:0
+  block2-H0-C1-time_start:2.35191637630662
+  block3-H0-C3-time_start:2.1994773519163764
+  block4-H0-C0-time_start:3.0270034843205575
+  block5-H0-C0-time_start:4.725609756097561
+  block6-H0-C2-time_start:4.31184668989547
+  block7-H0-C0-time_start:0
+  block8-H0-C1-time_start:0
+  block9-H0-C1-time_start:4.333623693379791
+  block10-H0-C3-time_start:4.333623693379791
+  block11-H0-C2-time_start:2.2865853658536586
+
+Job16
+  block0-H0-C1-time_start:0
+  block1-H0-C2-time_start:0
+  block2-H0-C3-time_start:6.155632984901277
+  block3-H0-C0-time_start:0
+  block4-H0-C3-time_start:0
+
+Job17
+  block0-H0-C4-time_start:4.550000000000001
+  block1-H0-C4-time_start:3.2625
+  block2-H0-C4-time_start:8.7375
+  block3-H0-C4-time_start:7.862500000000001
+  block4-H0-C4-time_start:6.9625
+  block5-H0-C4-time_start:0
+  block6-H0-C4-time_start:5.800000000000001
+  block7-H0-C4-time_start:1.825
+
+Job18
+  block0-H0-C2-time_start:0
+  block1-H0-C3-time_start:1.6572858036272669
+  block2-H0-C3-time_start:0
+  block3-H0-C1-time_start:0
+  block4-H0-C0-time_start:0
+
+Job19
+  block0-H0-C2-time_start:0
+  block1-H0-C0-time_start:0
+  block2-H0-C2-time_start:1.265495867768595
+  block3-H0-C1-time_start:1.6141528925619835
+  block4-H0-C1-time_start:0
+
+The maximum finish time: 110.0
